@@ -1,2 +1,2 @@
 # 202526Tra
-For tranning
+For trainning
