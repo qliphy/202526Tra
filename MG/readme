@@ -1,0 +1,18 @@
+https://github.com/StephenChao/pheno/blob/main/production/ihep.md 
+https://indico.cern.ch/event/1569174/contributions/6619411/attachments/3108835/5512764/MGinstalltutor.pdf 
+
+At lxplus,  “install pythia8” no need to set up CMSSW
+
+wget launchpad.net/mg5amcnlo/lts/2.9.x/+download/MG5_aMC_v2.9.24.tar.gz
+wget madgraph.phys.ucl.ac.be//Downloads/ExRootAnalysis/ExRootAnalysis_V1.1.2.tar.gz  
+   Add in Makefile
+    CXXFLAGS += $(ROOTCFLAGS) -Wno-write-strings -D_FILE_OFFSET_BITS=64 -DDROP_CGAL -I. -I/usr/include/tirpc
+    LIBS = $(ROOTLIBS) -ltirpc
+MG5_aMC>install pythia8
+exit MG5 and this line in your .bashrc :
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/afs/cern.ch/user/q/qili/workspace/2025MG/MG5_aMC_v2_9_24/HEPTools/lhapdf6_py3//lib
+
+git clone https://github.com/delphes/delphes.git Delphes
+   Directly do “install Delphes” may need ROOTSYS…
+   Sometime may need to do as below for delphes
+      source /cvmfs/sft.cern.ch/lcg/views/LCG_105/x86_64-el9-gcc12-opt/setup.sh
