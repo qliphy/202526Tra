@@ -1,0 +1,29 @@
+# vim:ft=conf
+
+Universe = vanilla
+Executable = x509run
+
++ProjectName="cms.org.cern"
+
+X509UP = x509up
+PROG = HIG-RunIISummer20UL18MiniAODv2-WHGG0-wrapper.sh
+FRAGMENT = HIG-RunIISummer20UL18wmLHEGEN-WHGG0
+NEVENT = 100
+NTHREAD = 1
+Arguments = $(X509UP) $(PROG) $(FRAGMENT) $(NEVENT) $(NTHREAD) $(SEED)
+
+request_cpus = 1
+request_memory = 4096
+x509userproxy = $(X509UP)
+
++JobFlavour = "tomorrow"
+
+Log    = log/condor.log
+Output = log/stdout.log
+Error  = log/stderr.log
+
+should_transfer_files = YES
+transfer_input_files = $(Executable),HIG-RunIISummer20UL18MiniAODv2-WHGG0.sh,$(X509UP),$(PROG),$(FRAGMENT),HIG-RunIISummer20UL18DIGIPremix-02315.patch,patch_premix_inputs.py
+transfer_output_files = ""
+
+Queue SEED from HIG-RunIISummer20UL18MiniAODv2-WHGG0.txt
