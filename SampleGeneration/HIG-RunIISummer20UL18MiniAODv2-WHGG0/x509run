@@ -1,0 +1,24 @@
+#!/bin/bash
+
+if [ $# -lt 2 ]; then
+    >&2 echo "usage: $(basename "$0") <x509up> <prog> [ <args> ]"
+    exit 1
+fi
+
+echo "Hello from $0!"
+echo "Args: $*"
+
+# Install x509 user proxy.
+set -e
+export X509_USER_PROXY=/tmp/x509up_u$UID
+cp "$1" ${X509_USER_PROXY}
+voms-proxy-info
+
+# Set environment variable $HOME.
+# This is required by DAS and other libraries.
+export HOME=/afs/cern.ch/user/${USER:0:1}/${USER}
+
+# Turn to user-specified program.
+PROG="$(readlink -f "$2")"
+shift 2
+exec "${PROG}" "$@"

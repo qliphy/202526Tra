@@ -1,0 +1,25 @@
+#!/bin/bash
+
+set -e
+
+# wget log output file
+LOGFILE=fetch-scripts.log
+rm -f "${LOGFILE}"
+
+# fetch scripts from remote server concurrently
+NUMBER=0
+SCRIPTS=
+for SCRIPT in $(cat scripts.txt); do
+    echo fetching: ${SCRIPT}
+    URL="https://cms-pdmv.cern.ch/mcm/public/restapi/requests/get_test/${SCRIPT}"
+    SCRIPT="${NUMBER}_${SCRIPT}.sh"
+    wget --no-check-certificate "${URL}" -O ${SCRIPT} -a "${LOGFILE}" &
+    SCRIPTS="${SCRIPTS} \"${SCRIPT}\""
+    let NUMBER+=1
+done
+
+# wait jobs to complete
+wait
+
+# set appropriate file modes
+eval "chmod +x${SCRIPTS}"
